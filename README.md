@@ -17,4 +17,36 @@ This example will delve into establishing a secure connection with MOS to GCP vi
 
 ## Setup
 
-TODO(nqbit): Finish Setup
+### Create a Google Cloud Platform Project
+
+```
+gcloud projects create YOUR_PROJECT_NAME
+gcloud config set project YOUR_PROJECT_NAME
+```
+
+### Create a Service Account
+
+```
+gcloud projects add-iam-policy-binding YOUR_PROJECT_NAME --member=serviceAccount:cloud-iot@system.gserviceaccount.com --role=roles/pubsub.publisher
+```
+
+### Create pubsub topics
+
+```
+gcloud beta pubsub topics create telemetry
+gcloud beta pubsub topics create state
+```
+
+### Create IoT Registry
+
+```
+gcloud beta iot registries create iot-registry --region YOUR_REGION --event-pubsub-topic=telemetry --state-pubsub-topic=state
+```
+
+### Setup Mongoose OS on ESP32
+
+(Here)[mongoose_os/README.md]
+
+### Setup the GCP Cloud Function
+
+(Here)[gcp_function/README.md]
